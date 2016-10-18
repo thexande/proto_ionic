@@ -301,7 +301,8 @@ angular.module('proto.loginController', [])
             picture: "http://graph.facebook.com/" + authResponse.userID + "/picture?type=large"
           });
           $ionicLoading.hide();
-          $state.go('app.home');
+          
+          //$state.go('app.home');
         }, function(fail) {
           // Fail get profile info
           console.log('profile info fail', fail);
@@ -342,13 +343,17 @@ angular.module('proto.loginController', [])
 
           // Check if we have our user saved
           var user = UserService.getUser('facebook');
-          console.log(user)
+          $scope.facebookUser = UserService.getUser('facebook');
+                        
+          $scope.openRegisterFB()
+
+
 
           if (!user.userID) {
             getFacebookProfileInfo(success.authResponse)
               .then(function(profileInfo) {
                 // For the purpose of this example I will store user data on local storage
-                $scope.facebookUser = {
+                $scope.newfacebookUser = {
                   authResponse: success.authResponse,
                   userID: profileInfo.id,
                   name: profileInfo.name,
@@ -356,11 +361,10 @@ angular.module('proto.loginController', [])
                   picture: "http://graph.facebook.com/" + success.authResponse.userID + "/picture?type=large"
                 }
 
-                UserService.setUser($scope.facebookUser);
+                UserService.setUser($scope.newfacebookUser);
 
 
-                // firebase login with facebook data
-                $scope.openRegisterFB()
+
 
                 //$state.go('app.home');
               }, function(fail) {
@@ -368,7 +372,9 @@ angular.module('proto.loginController', [])
                 console.log('profile info fail', fail);
               });
           } else {
-            $state.go('tab.home');
+
+            console.log("getFacebookProfileInfo")
+            //$state.go('tab.home');
           }
         } else {
           // If (success.status === 'not_authorized') the user is logged in to Facebook,
@@ -390,4 +396,12 @@ angular.module('proto.loginController', [])
     };
 
     //facebook end
+
+    // register fb user with firebase
+    $scope.registerFbUserFirebase = function(user) {
+      console.log("preparing to create account on firebase")
+      
+      console.log($scope.facebookUser)
+      // $scope.firebaseEmailLogin()
+    }
   })
