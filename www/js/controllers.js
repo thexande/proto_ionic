@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('proto.controllers', [])
 
 .controller('DemoCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout) {
   $scope.users = Users.all();

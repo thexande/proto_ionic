@@ -5,9 +5,19 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.directives', 'ionic.contrib.ui.tinderCards'])
+angular.module('proto', [
+  'ionic', 
+  'firebase',
+  'proto.configs',
+  'proto.controllers', 
+  'proto.loginController',
+  'proto.services', 
+  'proto.directives', 
+  'ionic.contrib.ui.tinderCards'
+  
+  ])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, CONFIG) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,7 +30,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-  });
+
+      //firebase
+    firebase.initializeApp({
+      apiKey: CONFIG.FIREBASE_API,
+      authDomain: CONFIG.FIREBASE_AUTH_DOMAIN,
+      databaseURL: CONFIG.FIREBASE_DB_URL,
+      storageBucket: CONFIG.FIREBASE_STORAGE,
+      messagingSenderId: CONFIG.FIREBASE_STORAGE
+    })
+  })
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -51,7 +70,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     views: {
       'home': {
         templateUrl: 'templates/home/home.html',
-        controller: 'DemoCtrl'
+        controller: 'loginController'
       }
     }
   })
