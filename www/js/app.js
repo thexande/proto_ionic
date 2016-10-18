@@ -11,6 +11,7 @@ angular.module('proto', [
   'proto.configs',
   'proto.controllers', 
   'proto.loginController',
+  'proto.homeController',
   'proto.services', 
   'proto.UserService',
   'proto.firebaseRegisterService',
@@ -72,7 +73,7 @@ angular.module('proto', [
     views: {
       'home': {
         templateUrl: 'templates/home/home.html',
-        controller: 'DemoCtrl'
+        controller: 'homeController'
       }
     }
   })

@@ -1,0 +1,85 @@
+<ion-view>
+  <ion-nav-title>
+  </ion-nav-title>
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon ion-ios-more"></button>
+  </ion-nav-buttons>
+
+  <ion-content class="has-footer">
+    <ion-refresher on-refresh="refresh()" pulling-icon="ion-chevron-up"></ion-refresher>
+
+    <div class="list new-feeds">
+      <div class="item item-avatar">
+        <img src="img/adam.jpg">
+        <h2><b>Marty McFly</b></h2>
+        <p>Consultant - Hi-Tech - Executive Sales</p>
+        <p>2 min</p>
+      </div>
+
+      <div class="item item-body post-body">
+        <p class="post-text">
+          It's here! Our latest Global Video Index is now available. This quarter we show <a href="">new trends</a> in mobile video consumption, engagement patterns by length of video, how sports publishers can grow viewers around gameday & how programmatic is
+          <span class="seemore">...see more</span>
+        </p>
+      </div>
+
+      <div class="item item-image">
+        <img src="img/photo.jpg">
+      </div>
+        
+      <div class="item item-body post-body">
+        <p>
+          <a href="" class="subdued">1 Like</a>·
+          <a href="" class="subdued">5 Comments</a>
+        </p>
+      </div>
+
+      <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" href="">
+          <i class="icon ion-thumbsup"></i>
+          Like
+        </a>
+        <a class="tab-item" href="">
+          <i class="icon ion-chatbox"></i>
+          Comment
+        </a>
+        <a class="tab-item" href="">
+          <i class="icon ion-share"></i>
+          Share
+        </a>
+      </div>
+
+      <!-- Likers -->
+      <div class="item item-divider no-bg b-none">Likes</div>
+      <div class="likers padding">
+        <img class="liker" src="img/adam.jpg" alt="" ng-repeat="i in [0,1,2,3]">
+        <button class="button icon ion-more button-stable liker"></button>
+      </div>
+      
+      <!-- Comments -->
+      <div class="item item-divider no-bg b-none">Comments</div>
+      <div class="item item-avatar" ng-repeat="i in [0,1,2]">
+        <img src="img/ben.png">
+        <div class="row no-padder">
+          <div class="col-80">
+            <h2><b>Ben</b></h2>
+          </div>
+          <div class="col-20 text-muted text-right">
+            {{$index + 1}}d
+          </div>
+        </div>
+        <p class="text-muted">Sales Executives</p>
+        <div class="dark text-wrap">That was so crowded there. They must love typography a lot!</div>
+      </div>
+    </div>
+  </ion-content>
+
+  <div class="bar bar-footer sub-footer item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="search" placeholder="Add a comment">
+    </label>
+    <button class="button button-clear">
+      Submit
+    </button>
+  </div>
+</ion-view>
