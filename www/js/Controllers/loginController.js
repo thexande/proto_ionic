@@ -283,10 +283,7 @@ angular.module('proto.loginController', [])
           console.log("user here", user)
           $scope.facebookUser = UserService.getUser('facebook');
                         
-          $scope.openRegisterFB().then(function(register) {
-            console.log("register closed")
-            console.log(register)
-          })
+          $scope.openRegisterFB()
 
 
 
@@ -341,12 +338,13 @@ angular.module('proto.loginController', [])
     // register fb user with firebase
     $scope.registerFbUserFirebase = function(user) {
       console.log("preparing to create account on firebase")
-      var userLogin = {
-        username: $scope.facebookUser
-      }
-      
-      $scope.firebaseEmailLogin()
+      $scope.facebookUser.username = $scope.facebookUser.email
+
       console.log($scope.facebookUser)
+
+      firebaseRegisterService.registerUser($scope.facebookUser)
+      $scope.facebookUser.password = null
+      firebaseRegisterService.createUserRecord($scope.facebookUser)
       // $scope.firebaseEmailLogin()
     }
   })
