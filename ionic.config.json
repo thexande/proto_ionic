@@ -1,0 +1,14 @@
+{
+  "name": "linkedin-ui",
+  "app_id": "d5efac9d",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*",
+    "scss/*.scss",
+    "scss/*.sass"
+  ]
+}
