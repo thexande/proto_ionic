@@ -37,6 +37,17 @@ gulp.task('install', ['git-check'], function() {
     });
 });
 
+gulp.task('browser:serve', function() {
+    gulp.src(paths.browser)
+        .pipe(webserver({
+            livereload: {enable: true, port: 35729},
+            directoryListing: false,
+            host: localhost,
+            port: 8100,
+            open: true
+        }));
+});
+
 gulp.task('git-check', function(done) {
   if (!sh.which('git')) {
     console.log(

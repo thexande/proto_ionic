@@ -7,7 +7,9 @@ angular.module('proto.loginController', [])
     Users,
     $ionicLoading,
     $state,
-    $timeout) {
+    $timeout,
+    $q,
+    UserService) {
     $scope.users = Users.all();
     console.log("in login controller")
 
@@ -259,6 +261,7 @@ angular.module('proto.loginController', [])
 
           // Check if we have our user saved
           var user = UserService.getUser('facebook');
+          console.log(user)
 
           if (!user.userID) {
             getFacebookProfileInfo(success.authResponse)
@@ -278,7 +281,7 @@ angular.module('proto.loginController', [])
                 console.log('profile info fail', fail);
               });
           } else {
-            $state.go('app.home');
+            $state.go('tab.home');
           }
         } else {
           // If (success.status === 'not_authorized') the user is logged in to Facebook,
@@ -294,7 +297,7 @@ angular.module('proto.loginController', [])
 
           // Ask the permissions you need. You can learn more about
           // FB permissions here: https://developers.facebook.com/docs/facebook-login/permissions/v2.4
-          facebookConnectPlugin.login(['email', 'public_profile'], fbLoginSuccess, fbLoginError);
+          facebookConnectPlugin.login(['email', 'public_profile','user_birthday'], fbLoginSuccess, fbLoginError);
         }
       });
     };
