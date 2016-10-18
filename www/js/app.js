@@ -53,7 +53,7 @@ angular.module('proto', [
     .state('welcome', {
       url: '/welcome',
       templateUrl: 'templates/welcome/intro.html',
-      controller: 'DemoCtrl'
+      controller: 'loginController'
     })
 
   // setup an abstract state for the tabs directive
@@ -70,7 +70,7 @@ angular.module('proto', [
     views: {
       'home': {
         templateUrl: 'templates/home/home.html',
-        controller: 'loginController'
+        controller: 'DemoCtrl'
       }
     }
   })
