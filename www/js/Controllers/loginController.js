@@ -185,6 +185,7 @@ angular.module('proto.loginController', [])
             return false;
           } else if (errorCode === 'auth/wrong-password') {
             alert('Incorrect password.');
+            $ionicLoading.hide()
             return false;
           } else if (errorCode === 'auth/argument-error') {
             alert('Password must be string.');
