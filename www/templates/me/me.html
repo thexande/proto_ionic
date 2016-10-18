@@ -1,0 +1,86 @@
+<ion-view view-title="Me">
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon ion-ios-gear-outline" ui-sref="tab.settings"></button>
+  </ion-nav-buttons>
+  <ion-content class="stable-bg">
+    <div class="header-me">
+      <div class="overlay">
+        <div class="row row-center upper" ui-sref="tab.myprofile">
+          <div class="col-33">
+            <img src="img/ben.png" alt="">    
+          </div>
+          <div class="col-50">
+            <h2>Hieu Pham</h2>    
+          </div>
+          <div class="col text-right">
+            <i class="icon ion-chevron-right"></i>    
+          </div>
+        </div>
+
+        <div class="row lower">
+          <div class="col">
+            <h3><b>54</b></h3>
+            <p>Profile viewers</p>
+          </div>
+          <div class="col">
+            <h3><b>48</b></h3>
+            <p>Viewers of last share</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="list">
+      <div class="item item-divider text-muted">
+        Notifications
+      </div>
+
+      <div class="card">
+        <div class="item item-me">
+          <div class="row">
+            <div class="col-75">
+              <h2 class="text-wrap">Batman and 2 others viewed your profile</h2>
+            </div>
+            <div class="col-25 text-right">
+              <i class="dot-status icon ion-record positive"></i>
+              <span class="text-muted">2 mins</span>
+            </div>
+          </div>
+          <div class="viewers">
+            <a href="" class="avatar">
+              <img src="img/adam.jpg" alt="">  
+            </a>
+
+            <a href="" class="avatar">
+              <img src="img/ben.png" alt="">
+            </a>
+
+            <a href="" class="avatar">
+              <img src="img/mike.png" alt="">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" ng-repeat="i in [0,1,2,3]">
+        <div class="item item-avatar item-me">
+          <img src="img/ben.png" alt="">
+          <div class="row">
+            <div class="col-75">
+              <h2 class="text-wrap">Superman endorsed you for 10 skills</h2>
+            </div>
+            <div class="col-25 text-right">
+              <span class="text-muted">2 mins</span>
+            </div>
+          </div>
+          <div class="skills">
+            <div>AJAX</div>
+            <div>Javascript</div>
+            <div>PHP</div>
+          </div>
+          <span class="seemore">+7 more</span>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

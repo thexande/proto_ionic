@@ -1,0 +1,19 @@
+<ion-modal-view>
+	<ion-header-bar class="bar-calm">
+		<button class="button button-clear" ng-click="closeAdd()">
+			<i class="icon ion-android-close"></i>
+		</button>
+		<div class="h1 title">Add Connections</div>
+	</ion-header-bar>
+	<ion-content>
+		<div class="list">
+      <div class="item item-divider">People you may know</div>
+      <div class="item item-avatar item-icon-right" ng-repeat="i in [0,1,2,3,4,5,6,7,8]">
+        <img src="img/adam.jpg" alt="">
+        <h2><b>Adam Lambert</b></h2>
+        <p>Sales Executive</p>
+        <i class="icon ion-plus-circled calm"></i>
+      </div>
+    </div>
+	</ion-content>
+</ion-modal-view>

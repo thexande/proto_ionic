@@ -1,0 +1,59 @@
+<ion-view view-title="Adam Something">
+  <ion-nav-buttons side="primary">
+    <button class="button button-icon ion-ios-arrow-back" ui-sref="tab.messaging"></button>
+  </ion-nav-buttons>  
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon ion-ios-information-outline"></button>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="list list-bubble">
+      <div class="card bubble-to">
+        <div class="item item-text-wrap stable-bg">
+          <p>
+            Hi Hieu,  
+            <br>
+            I think you are ideal candidate, might I receive your resume and invite you to the interview by this week?  
+            <br>
+            Many Thanks,
+          </p>
+        </div>
+      </div>
+      <div class="text-muted time-to">10:22am</div>
+
+
+      <div class="card bubble-from">
+        <div class="item item-text-wrap calm-bg">
+          <p>
+            Hi, 
+            <br>
+            Thanks for reaching out. I only have my linkedin profile updated so can you take it? And which company do you refer to?  
+            <br>
+            Cheers,
+          </p>
+        </div>
+      </div>
+      <div class="text-muted time-from">11:20am</div>
+
+      <div class="card bubble-to">
+        <div class="item item-text-wrap stable-bg">
+          <p>
+            Hi,  
+            <br>
+            I would like to take it as your latest resume. I come from a head hunting company...
+          </p>
+        </div>
+      </div>
+      <div class="text-muted time-to">1:22pm</div>
+      
+    </div>
+  </ion-content>
+  <ion-footer-bar class="bar-light item-input-inset b-t">
+    <button class="button button-clear button-icon ion-camera">
+    </button>
+    <label class="item-input-wrapper no-bg">
+      <input type="search" placeholder="Add a message" ng-model="query" ng-init="query=''">
+    </label>
+    <button class="button button-clear button-icon ion-android-send button-calm">
+    </button>
+  </ion-footer-bar>
+</ion-view>

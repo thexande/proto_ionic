@@ -1,0 +1,36 @@
+<ion-modal-view class="bg-gradient">
+  <ion-header-bar class="no-bg b-none">
+    <h1 class="title"></h1>
+    <button class="button button-icon button-clear button-light ion-android-close" ng-click="closeRegister()"></button>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <div class="list card"> 
+      <label class="item item-input">
+        <span class="input-label">First name</span>
+        <input type="text" focus-me>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Last name</span>
+        <input type="text">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Email</span>
+        <input type="email">
+      </label>
+      <label class="item item-input">
+      <span class="input-label">Password</span>
+        <input type="password">
+      </label>
+    </div>
+
+    <p class="light text-center">
+      By signing up, you agree to the <br>Terms of Service & Privacy Policy
+    </p>
+
+    <button class="button button-block button-outline button-light" ng-click="goToHome()"><b>Join now</b></button>
+
+    <p class="light text-center">
+      Already have an account? <a href="" class="light" ng-click="closeRegister(); openLogin()"><b>Sign in</b></a>
+    </p>
+  </ion-content>
+</ion-modal-view>

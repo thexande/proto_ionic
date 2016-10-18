@@ -1,0 +1,54 @@
+<ion-view view-title="Network">
+  <ion-nav-buttons side="">
+    <button class="button button-icon ion-person-stalker"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon ion-ios-personadd" ng-click="openAdd()"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-bg">
+    <div class="head-text text-center">
+      <p>Your network brief for today</p>
+      <h2 class="font-thin" ng-if="cards.length">{{cards.length}} updates from <br>your 301 connections</h2>
+      <h2 class="font-thin" ng-if="!cards.length">No new updates <br>You caught up for now</h2>
+    </div>
+
+    <td-cards ng-if="cards.length">
+      <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($event, $index)" on-swipe-right="cardSwipedRight($event, $index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}">
+        <div class="list card card-tinder">
+          <div class="item b-none">
+            Birthday  
+          </div>
+          <div class="item item-avatar b-none">
+            <img ng-src="{{card.image}}">
+            <h2>Optimus prime</h2>
+            <p>Country Sales</p>
+          </div>
+          <div class="item item-text-wrap b-none">
+            Celebrate a birthday today
+          </div>
+          <div class="item item-body text-center">
+            <button class="button button-clear button-calm"><b>Say happy birthday</b></button>
+          </div>
+          <div class="no-text">
+            <i class="icon ion-trash-b assertive"></i>
+            <p class="assertive">remove card</p>
+          </div>
+          <div class="yes-text">
+            <i class="icon ion-arrow-right-c calm"></i>
+            <p class="calm">next card</p>
+          </div>
+        </div>
+      </td-card>
+    </td-cards>
+
+    <div class="list">
+      <div class="item item-divider">People you may know</div>
+      <div class="item item-avatar item-icon-right" ng-repeat="i in [0,1,2,3,4,5,6,7,8]">
+        <img src="img/adam.jpg" alt="">
+        <h2><b>Adam Lambert</b></h2>
+        <p>Sales Executive</p>
+        <i class="icon ion-plus-circled calm"></i>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

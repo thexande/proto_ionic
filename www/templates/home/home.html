@@ -1,0 +1,101 @@
+<ion-view>
+  <ion-nav-title>
+    <span class="logo-text">in</span>
+  </ion-nav-title>
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon ion-grid" ng-click="toggleMenu()"></button>
+  </ion-nav-buttons>
+
+  <div class="bar bar-subheader box-shadow">
+    <div class="button-bar">
+      <a class="button button-light icon-left ion-compose has-border-right" ng-click="openPost()">Share</a>
+      <a class="button button-light icon-left ion-camera" ng-click="openPost()">Photo</a>
+    </div>
+  </div>
+
+  <ion-content class="has-subheader stable-bg">
+    <ion-refresher on-refresh="refresh()" pulling-icon="ion-chevron-up"></ion-refresher>
+
+    <div class="list card new-feeds" ng-repeat="item in [0,1,2,3,4,5,6,7,8]">
+      <div class="item" ng-if="$index%5 == 1">
+        <h2><b>Elvis Presley</b> likes this</h2>
+      </div>
+
+      <div class="item item-avatar">
+        <img src="img/adam.jpg">
+        <h2><b>Marty McFly</b></h2>
+        <p>Consultant - Hi-Tech - Executive Sales</p>
+        <p>2 min</p>
+      </div>
+
+      <div class="item item-body post-body" ui-sref="tab.post({id: $index})">
+        <p class="post-text">
+          It's here! Our latest Global Video Index is now available. This quarter we show <a href="">new trends</a> in mobile video consumption, engagement patterns by length of video, how sports publishers can grow viewers around gameday & how programmatic is
+          <span class="seemore">...see more</span>
+        </p>
+      </div>
+
+      <div class="item item-image" ng-if="$index%2 == 0">
+        <img src="img/photo.jpg">
+      </div>
+        
+      <div class="item item-body post-body">
+        <div class="list card post-inline" ng-if="$index%5 == 1">
+          <div class="item item-body post-body">
+            <p>What is the secret to rapid grow your app?</p>
+            <p class="post-text"><a href="">https://li.ti/u7d87f</a></p>
+          </div>
+
+          <div class="item item-image">
+            <img src="img/photo.jpg">
+          </div>
+
+          <div class="item item-body post-body">
+            <p><b>Download the app</b></p>
+          </div>
+        </div>  
+
+        <p>
+          <a href="" class="subdued">1 Like</a>·
+          <a href="" class="subdued">5 Comments</a>
+        </p>
+      </div>
+
+      <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" href="">
+          <i class="icon ion-thumbsup"></i>
+          Like
+        </a>
+        <a class="tab-item" href="">
+          <i class="icon ion-chatbox"></i>
+          Comment
+        </a>
+        <a class="tab-item" href="">
+          <i class="icon ion-share"></i>
+          Share
+        </a>
+      </div>
+      
+      <!-- Latest comment -->
+      <div class="item item-avatar" ng-if="$index%5 == 1">
+        <img src="img/ben.png">
+        <h2><b>Ben</b></h2>
+        <p>That's cool my friends. Hope you're doing good</p>
+      </div>
+    </div>   
+
+    <!-- Recommended jobs -->
+    <div class="list card">
+      <div class="item">
+        <h2>Jobs recommended for you</h2>
+      </div>
+
+      <div class="item item-avatar item-text-wrap" ng-repeat="item in [0,1,2]">
+        <img src="img/adam.jpg" class="avatar-organization">
+        <h2><b>Product Management Manager, Finance</b></h2>
+        <p>ABB bank, Ho Chi Minh</p>
+      </div>
+    </div>    
+
+  </ion-content>
+</ion-view>

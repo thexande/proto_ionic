@@ -1,0 +1,24 @@
+<ion-view view-title="Messaging">
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon ion-compose"></button>
+  </ion-nav-buttons>
+  <ion-content class="stable-bg">
+    <div class="list list-messages">
+      <div class="item item-avatar" ng-repeat="i in [0,1,2,3,4,5,6,7,8,9]" ui-sref="chat">
+        <img src="img/adam.jpg" alt="">
+        <div class="row">
+          <div class="col-75">
+            <h2>Adam {{$index}}</h2>
+            <p>
+              Hello candidates! I'm from NAN a company that provide the best oursourcing service
+            </p>
+          </div>
+          <div class="col-25 text-right text-muted">
+            Nov 3
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

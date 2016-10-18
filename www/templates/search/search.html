@@ -1,0 +1,35 @@
+<ion-view hide-nav-bar="true">
+  <ion-header-bar class="has-input item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="search" placeholder="Search" ng-model="query" ng-init="query=''" focus-me>
+    </label>
+    <button class="button button-clear" ng-show="query.length > 0" ng-click="query = ''">
+      Cancel
+    </button>
+  </ion-header-bar>
+
+  <ion-content class="has-header bg-grey-200">
+    <div class="list" ng-show="filtedUsers.length && query.length">
+      <div class="item item-avatar" ng-repeat="user in filtedUsers = (users | filter: query)">
+        <img ng-src="{{user.face}}">
+        <h2><b>{{user.name}}</b></h2>
+        <p>{{user.lastText}}</p>  
+      </div>
+    </div>
+
+    <div class="list" ng-hide="query.length">
+      <div class="item item-divider">
+        Recent searches
+      </div>
+      <div class="item item-icon-left">
+        <i class="icon ion-ios-search"></i>
+        Hieu Pham
+      </div>
+      <div class="item item-avatar">
+        <img src="img/ben.png">
+        <h2><b>Ben Stillers</b></h2>
+        <p>Back off, man. I'm a scientist.</p>  
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
