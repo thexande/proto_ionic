@@ -345,6 +345,7 @@ angular.module('proto.loginController', [])
       firebaseRegisterService.registerUser($scope.facebookUser)
       $scope.facebookUser.password = null
       firebaseRegisterService.createUserRecord($scope.facebookUser)
+      $scope.openLogin()
       // $scope.firebaseEmailLogin()
     }
   })
