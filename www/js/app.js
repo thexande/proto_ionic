@@ -13,6 +13,7 @@ angular.module('proto', [
   'proto.loginController',
   'proto.services', 
   'proto.UserService',
+  'proto.firebaseRegisterService',
   'proto.directives', 
   'ionic.contrib.ui.tinderCards'
   
@@ -40,13 +41,6 @@ angular.module('proto', [
       storageBucket: CONFIG.FIREBASE_STORAGE,
       messagingSenderId: CONFIG.FIREBASE_STORAGE
     })
-
-    if (window.cordova.platformId == "browser") {
-  facebookConnectPlugin.browserInit(1394047177273563, success);
-  // version is optional. It refers to the version of API you may want to use.
-  // success is optional. It calls the function when the SDK has been inited
-}
-
   })
 })
 

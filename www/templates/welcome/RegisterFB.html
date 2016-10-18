@@ -4,7 +4,7 @@
     <button class="button button-icon button-clear button-light ion-android-close" ng-click="closeRegister()"></button>
   </ion-header-bar>
   <ion-content class="padding">
-    <form name="form_register" ng-submit="$scope.registerFbUserFirebase()"></form>
+    <form name="form_register" ng-submit="registerFbUserFirebase()">
     <h1>Complete Registration</h1>
     <div class="list card"> 
       <label class="item item-input">
@@ -24,8 +24,8 @@
       By signing up, you agree to the <br>Terms of Service & Privacy Policy
     </p>
 
-    <button class="button button-block button-outline button-light" ng-click="goToHome()"><b>Complete Registration</b></button>
-
+    <button type="submit" class="button button-block button-outline button-light"><b>Complete Registration</b></button>
+</form>
     <p class="light text-center">
       Already have an account? <a href="" class="light" ng-click="closeRegisterFB(); openLogin()"><b>Sign in</b></a>
     </p>

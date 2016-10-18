@@ -9,7 +9,8 @@ angular.module('proto.loginController', [])
     $state,
     $timeout,
     $q,
-    UserService) {
+    UserService,
+    firebaseRegisterService) {
     $scope.users = Users.all();
     console.log("in login controller")
 
@@ -132,71 +133,7 @@ angular.module('proto.loginController', [])
         template: '<ion-spinner></ion-spinner>'
       });
 
-      $scope.firebaseEmailLogin = function(userLogin) {
-         firebase.auth().signInWithEmailAndPassword(userLogin.username, userLogin.password).then(function() {
-          // Sign-In successful.
-          //console.log("Login successful");
 
-
-
-
-          var user = firebase.auth().currentUser;
-
-          var name, email, photoUrl, uid;
-
-          if (user.emailVerified) { //check for verification email confirmed by user from the inbox
-
-            $ionicLoading.hide();
-            $state.go('tab.home');
-            $scope.closeLogin();
-            $scope.closeRegister();
-
-            name = user.displayName;
-            email = user.email;
-            photoUrl = user.photoURL;
-            uid = user.uid;
-
-            //console.log(name + "<>" + email + "<>" +  photoUrl + "<>" +  uid);
-
-            localStorage.setItem("photo", photoUrl);
-
-          } else {
-
-            alert("Email not verified, please check your inbox or spam messages")
-            return false;
-
-          } // end check verification email
-
-
-        }, function(error) {
-          // An error happened.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log(errorCode);
-          if (errorCode === 'auth/invalid-email') {
-            alert('Enter a valid email.');
-            return false;
-          } else if (errorCode === 'auth/wrong-password') {
-            alert('Incorrect password.');
-            return false;
-          } else if (errorCode === 'auth/argument-error') {
-            alert('Password must be string.');
-            return false;
-          } else if (errorCode === 'auth/user-not-found') {
-            alert('No such user found.');
-            return false;
-          } else if (errorCode === 'auth/too-many-requests') {
-            alert('Too many failed login attempts, please try after sometime.');
-            return false;
-          } else if (errorCode === 'auth/network-request-failed') {
-            alert('Request timed out, please try again.');
-            return false;
-          } else {
-            alert(errorMessage);
-            return false;
-          }
-        });
-      }
 
 
 
@@ -343,9 +280,13 @@ angular.module('proto.loginController', [])
 
           // Check if we have our user saved
           var user = UserService.getUser('facebook');
+          console.log("user here", user)
           $scope.facebookUser = UserService.getUser('facebook');
                         
-          $scope.openRegisterFB()
+          $scope.openRegisterFB().then(function(register) {
+            console.log("register closed")
+            console.log(register)
+          })
 
 
 
@@ -400,7 +341,11 @@ angular.module('proto.loginController', [])
     // register fb user with firebase
     $scope.registerFbUserFirebase = function(user) {
       console.log("preparing to create account on firebase")
+      var userLogin = {
+        username: $scope.facebookUser
+      }
       
+      $scope.firebaseEmailLogin()
       console.log($scope.facebookUser)
       // $scope.firebaseEmailLogin()
     }
