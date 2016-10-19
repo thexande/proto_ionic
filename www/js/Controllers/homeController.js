@@ -12,15 +12,16 @@ angular.module('proto.homeController', ['ngCordova'])
 
 // Get a reference to the storage service, which is used to create references in your storage bucket
 var storage = firebase.storage();
-    
-
-
 // Create a storage reference from our storage service
 var storageRef = storage.ref();
 // Create a child reference
 var imagesRef = storageRef.child('images');
 
-
+$scope.uploadPlaceImage = function(imageBlob) {
+  imagesRef.put(imageBlob).then(function(snapshot) {
+    console.log('Uploaded a blob or file!');
+  });
+}
 
 
     $scope.users = Users.all();
@@ -130,19 +131,36 @@ var imagesRef = storageRef.child('images');
 			 image.onload = function() {
 				 $scope.imageSRC = image ;
  
- window.resolveLocalFileSystemURL(imageURI, function (fileEntry) {
-             fileEntry.file(function (file) {
-                 var reader = new FileReader();
-                 reader.onloadend = function () {
-                          // This blob object can be saved to firebase
-                          var blob = new Blob([new Uint8Array(this.result)], { type: "image/jpeg" });                  
-                          console.log("blob here!" , blob);
-                 };
-                 reader.readAsArrayBuffer(file);
-              });
-            }, function (error) {
-              errorCallback(error);
-          });
+ 
+var getFileBlob = function (url, cb) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.responseType = "blob";
+        xhr.addEventListener('load', function() {
+            cb(xhr.response);
+        });
+        xhr.send();
+};
+
+var blobToFile = function (blob, name) {
+        blob.lastModifiedDate = new Date();
+        blob.name = name;
+        return blob;
+};
+
+var getFileObject = function(filePathOrUrl, cb) {
+       getFileBlob(filePathOrUrl, function (blob) {
+          cb(blobToFile(blob, 'test.jpg'));
+       });
+};
+
+getFileObject(imageURI, function (fileObject) {
+     console.log(fileObject);
+     $scope.uploadPlaceImage(fileObject)
+
+}); 
+
+
 
 
          console.log("image here ", image)
