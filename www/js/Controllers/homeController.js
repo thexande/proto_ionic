@@ -70,4 +70,18 @@ angular.module('proto.homeController', [])
     $scope.closePost = function() {
       $scope.modalPost.hide();
     };
+
+    // New Place modal
+    $ionicModal.fromTemplateUrl('templates/modal/new_place.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modalPlace = modal;
+    });
+    $scope.openPlace = function() {
+      $scope.modalPlace.show();
+    };
+    $scope.closePlace = function() {
+      $scope.modalPlace.hide();
+    };
   })
