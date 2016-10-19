@@ -13,16 +13,15 @@ angular.module('proto.homeController', ['ngCordova'])
 $scope.imageURI = ''
 
 
-// Get a reference to the storage service, which is used to create references in your storage bucket
+
+
+$scope.uploadPlaceImage = function(imageBlob, filename) {
+  // Get a reference to the storage service, which is used to create references in your storage bucket
 var storage = firebase.storage();
 // Create a storage reference from our storage service
-var storageRef = storage.ref('places');
-// Create a child reference
-var imageRef = storageRef.childByAutoId();
-$scope.placeKey = imageRef.key
+var imagesRef = storage.ref(filename);
 
-$scope.uploadPlaceImage = function(imageBlob) {
-  imageRef.put(imageBlob).then(function(snapshot) {
+  imagesRef.put(imageBlob).then(function(snapshot) {
     console.log('Uploaded a blob or file!');
   });
 }
@@ -52,7 +51,7 @@ $scope.createAndUploadBlob = function(imageURI, filename) {
 
   getFileObject(imageURI, function (fileObject) {
       console.log(fileObject);
-      $scope.uploadPlaceImage(fileObject)
+      $scope.uploadPlaceImage(fileObject, filename)
 
   }); 
 }
