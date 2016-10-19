@@ -84,4 +84,9 @@ angular.module('proto.homeController', [])
     $scope.closePlace = function() {
       $scope.modalPlace.hide();
     };
+
+
+    //begin camera logic
+
+    // end camera logic
   })
