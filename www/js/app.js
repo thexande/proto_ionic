@@ -14,6 +14,7 @@ angular.module('proto', [
   'proto.homeController',
   'proto.services', 
   'proto.UserService',
+  'proto.createPlaceService',
   'proto.firebaseRegisterService',
   'proto.directives', 
   'ionic.contrib.ui.tinderCards'

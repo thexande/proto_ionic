@@ -8,21 +8,67 @@ angular.module('proto.homeController', ['ngCordova'])
     $ionicModal,
     $cordovaFile, 
     $cordovaSocialSharing,
-    $ionicHistory) {
+    $ionicHistory,
+    createPlaceService) {
+$scope.imageURI = ''
+
 
 // Get a reference to the storage service, which is used to create references in your storage bucket
 var storage = firebase.storage();
 // Create a storage reference from our storage service
-var storageRef = storage.ref();
+var storageRef = storage.ref('places');
 // Create a child reference
-var imagesRef = storageRef.child('images');
+var imageRef = storageRef.childByAutoId();
+$scope.placeKey = imageRef.key
 
 $scope.uploadPlaceImage = function(imageBlob) {
-  imagesRef.put(imageBlob).then(function(snapshot) {
+  imageRef.put(imageBlob).then(function(snapshot) {
     console.log('Uploaded a blob or file!');
   });
 }
 
+$scope.createAndUploadBlob = function(imageURI, filename) {
+    var getFileBlob = function (url, cb) {
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", url);
+          xhr.responseType = "blob";
+          xhr.addEventListener('load', function() {
+              cb(xhr.response);
+          });
+          xhr.send();
+  };
+
+  var blobToFile = function (blob, name) {
+          blob.lastModifiedDate = new Date();
+          blob.name = name;
+          return blob;
+  };
+
+  var getFileObject = function(filePathOrUrl, cb) {
+        getFileBlob(filePathOrUrl, function (blob) {
+            cb(blobToFile(blob, filename + '.jpg'));
+        });
+  };
+
+  getFileObject(imageURI, function (fileObject) {
+      console.log(fileObject);
+      $scope.uploadPlaceImage(fileObject)
+
+  }); 
+}
+// create new Place
+$scope.location = {}
+$scope.createNewPlace = function() {
+  createPlaceService.createPlace($scope.location)
+  // is image uri set?
+  if($scope.imageURI != ''){
+    $scope.createAndUploadBlob($scope.imageURI, $scope.location.title)
+  }
+  
+
+
+  console.log("creating new place ", $scope.location)
+}
 
     $scope.users = Users.all();
 
@@ -130,35 +176,8 @@ $scope.uploadPlaceImage = function(imageBlob) {
 		navigator.camera.getPicture(function(imageURI) {
 			 image.onload = function() {
 				 $scope.imageSRC = image ;
+         $scope.imageURI = imageURI
  
- 
-var getFileBlob = function (url, cb) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        xhr.responseType = "blob";
-        xhr.addEventListener('load', function() {
-            cb(xhr.response);
-        });
-        xhr.send();
-};
-
-var blobToFile = function (blob, name) {
-        blob.lastModifiedDate = new Date();
-        blob.name = name;
-        return blob;
-};
-
-var getFileObject = function(filePathOrUrl, cb) {
-       getFileBlob(filePathOrUrl, function (blob) {
-          cb(blobToFile(blob, 'test.jpg'));
-       });
-};
-
-getFileObject(imageURI, function (fileObject) {
-     console.log(fileObject);
-     $scope.uploadPlaceImage(fileObject)
-
-}); 
 
 
 

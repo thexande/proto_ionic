@@ -1,4 +1,5 @@
 <ion-modal-view>
+
   <ion-header-bar class="bar-calm">
     <button class="button button-clear" ng-click="closePlace()">
 			<i class="icon ion-android-close"></i>
@@ -6,6 +7,7 @@
     <div class="h1 title">Create Place</div>
   </ion-header-bar>
   <ion-content>
+    <form ng-submit="createNewPlace()">
     <div class="list">
       <div class="item item-avatar item-text-wrap b-none">
         <img src="img/ben.png" alt="">
@@ -38,8 +40,9 @@
         <button class="button button-icon ion-earth"></button>
       </div>
       <div class="col-33 text-right">
-        <button class="button button-outline button-calm">Share Place</button>
+        <button type="submit" class="button button-outline button-calm">Share Place</button>
       </div>
     </div>
   </ion-footer-bar>
+  </form>
 </ion-modal-view>
