@@ -8,6 +8,7 @@
 angular.module('proto', [
   'ionic', 
   'firebase',
+  'ngCordova',
   'proto.configs',
   'proto.controllers', 
   'proto.loginController',

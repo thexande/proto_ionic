@@ -1,73 +1,76 @@
 angular.module('proto.homeController', ['ngCordova'])
   .controller('homeController', function(
-    $scope, 
-    $state, 
-    $firebaseObject, 
-    $firebaseArray, 
-    Users, 
+    $scope,
+    $state,
+    $firebaseObject,
+    $firebaseArray,
+    Users,
     $ionicModal,
-    $cordovaFile, 
+    $cordovaFile,
     $cordovaSocialSharing,
     $ionicHistory,
     createPlaceService) {
-$scope.imageURI = ''
+    $scope.imageURI = ''
 
 
 
 
-$scope.uploadPlaceImage = function(imageBlob, filename) {
-  // Get a reference to the storage service, which is used to create references in your storage bucket
-var storage = firebase.storage();
-// Create a storage reference from our storage service
-var imagesRef = storage.ref(filename);
+    $scope.uploadPlaceImage = function(imageBlob, filename) {
+      // Get a reference to the storage service, which is used to create references in your storage bucket
+      var storage = firebase.storage();
+      // Create a storage reference from our storage service
+      var imagesRef = storage.ref(filename);
 
-  imagesRef.put(imageBlob).then(function(snapshot) {
-    console.log('Uploaded a blob or file!');
-  });
-}
+      imagesRef.put(imageBlob).then(function(snapshot) {
+        console.log('Uploaded a blob or file!');
+      });
+    }
 
-$scope.createAndUploadBlob = function(imageURI, filename) {
-    var getFileBlob = function (url, cb) {
+    $scope.createAndUploadBlob = function(imageURI, filename) {
+      
+        var getFileBlob = function(url, cb) {
+          console.log("trying to get file with get request ")
           var xhr = new XMLHttpRequest();
           xhr.open("GET", url);
           xhr.responseType = "blob";
           xhr.addEventListener('load', function() {
-              cb(xhr.response);
+            cb(xhr.response);
           });
           xhr.send();
-  };
+        };
 
-  var blobToFile = function (blob, name) {
+        var blobToFile = function(blob, name) {
           blob.lastModifiedDate = new Date();
           blob.name = name;
           return blob;
-  };
+        };
 
-  var getFileObject = function(filePathOrUrl, cb) {
-        getFileBlob(filePathOrUrl, function (blob) {
+        var getFileObject = function(filePathOrUrl, cb) {
+          getFileBlob(filePathOrUrl, function(blob) {
             cb(blobToFile(blob, filename + '.jpg'));
+          });
+        };
+
+        getFileObject(imageURI, function(fileObject) {
+          console.log("now getting file object", fileObject);
+          $scope.uploadPlaceImage(fileObject, filename)
+
         });
-  };
-
-  getFileObject(imageURI, function (fileObject) {
-      console.log(fileObject);
-      $scope.uploadPlaceImage(fileObject, filename)
-
-  }); 
-}
-// create new Place
-$scope.location = {}
-$scope.createNewPlace = function() {
-  createPlaceService.createPlace($scope.location)
-  // is image uri set?
-  if($scope.imageURI != ''){
-    $scope.createAndUploadBlob($scope.imageURI, $scope.location.title)
-  }
-  
+      }
+      // create new Place, called when new place form is submitted
+    $scope.location = {}
+    $scope.createNewPlace = function() {
+      console.log("creating new place now ", $scope.imageURI)
+      createPlaceService.createPlace($scope.location)
+        // is image uri set?
+      if ($scope.imageURI != '') {
+        $scope.createAndUploadBlob($scope.imageURI, $scope.location.title)
+      }
 
 
-  console.log("creating new place ", $scope.location)
-}
+
+      console.log("creating new place ", $scope.location)
+    }
 
     $scope.users = Users.all();
 
@@ -157,162 +160,142 @@ $scope.createNewPlace = function() {
 
     //begin camera logic
     $scope.$on("$ionicView.enter", function(event) {
-          $ionicHistory.clearCache();
-          $ionicHistory.clearHistory();
+      $ionicHistory.clearCache();
+      $ionicHistory.clearHistory();
     });
 
-   // LOAD IMAGE FROM THE CAMERA
-   $scope.takePhoto = function(type) {
-		
-		var image = new Image();
+    // LOAD IMAGE FROM THE CAMERA
+    $scope.takePhoto = function(type) {
 
-		if ( type == "Camera" )
-			type = navigator.camera.PictureSourceType.CAMERA ;
-		else type = navigator.camera.PictureSourceType.PHOTOLIBRARY ;
-	
+      var image = new Image();
 
-
-		navigator.camera.getPicture(function(imageURI) {
-			 image.onload = function() {
-				 $scope.imageSRC = image ;
-         $scope.imageURI = imageURI
- 
+      if (type == "Camera")
+        type = navigator.camera.PictureSourceType.CAMERA;
+      else type = navigator.camera.PictureSourceType.PHOTOLIBRARY;
 
 
 
+      navigator.camera.getPicture(function(imageURI) {
+        $scope.imageURI = imageURI
+        $scope.createAndUploadBlob(imageURI, "woot")
+        image.onload = function() {
+          $scope.imageSRC = image;
 
-         console.log("image here ", image)
-				  var canvas =  document.getElementById('myCanvas');
-				  canvas.width = image.width;
-				  canvas.height = image.height;
+          console.log("image here ", image)
+          var canvas = document.getElementById('myCanvas');
+          canvas.width = image.width;
+          canvas.height = image.height;
 
-				  var ctx = canvas.getContext("2d");
-				  ctx.drawImage(image, 0,0, image.width,image.height); // DRAW THE IMAGE ONTO CANVAS      
-				 
-				  // READING METADATA FROM IMAGE	
-				  EXIF.getData(image, function() {
-					console.log("in exif " +  JSON.stringify(this));
-					});
-				  
-				$scope.cleanUp(); // CLEAN UP IMAGES TAKEN
-			};
-		
-			image.src = imageURI ; // LOAD THE IMAGE OBJECT
- 
-			}, function(message) { //ERROR HANDLER
-				console.log("error " + message);
-				
-			}, { // CAMERA OPTIONS
-				quality:50,
-				sourceType: type,
-				encodingType: Camera.EncodingType.JPEG,
-				correctOrientation: true,
-				destinationType: Camera.DestinationType.FILE_URI
-			});
-}
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(image, 0, 0, image.width, image.height); // DRAW THE IMAGE ONTO CANVAS      
 
-	$scope.cleanUp = function(){ // CLEAN UP PHOTOS TAKEN
-		
-		navigator.camera.cleanup(onSuccess, onFail);
+          // READING METADATA FROM IMAGE	
+          EXIF.getData(image, function() {
+            console.log("in exif " + JSON.stringify(this));
+          });
 
-			function onSuccess() {
-				console.log("Camera cleanup success.")
-			}
+          $scope.cleanUp(); // CLEAN UP IMAGES TAKEN
+        };
 
-			function onFail(message) {
-				alert('Failed because: ' + message);
-			}
-	}
-		
+        image.src = imageURI; // LOAD THE IMAGE OBJECT
 
-  // ROTATE IMAGE FUNCTION
-  $scope.rotateImage = function(degree){
+      }, function(message) { //ERROR HANDLER
+        console.log("error " + message);
 
-     $ionicLoading.show({
-            template: 'Working...'
+      }, { // CAMERA OPTIONS
+        quality: 50,
+        sourceType: type,
+        encodingType: Camera.EncodingType.JPEG,
+        correctOrientation: true,
+        destinationType: Camera.DestinationType.FILE_URI
+      });
+    }
+
+    $scope.cleanUp = function() { // CLEAN UP PHOTOS TAKEN
+
+      navigator.camera.cleanup(onSuccess, onFail);
+
+      function onSuccess() {
+        console.log("Camera cleanup success.")
+      }
+
+      function onFail(message) {
+        alert('Failed because: ' + message);
+      }
+    }
+
+
+
+
+
+
+    // ROTATE IMAGE FUNCTION
+    $scope.rotateImage = function(degree) {
+
+      $ionicLoading.show({
+        template: 'Working...'
       });
 
       // DEPENDING ON THE SIZE OF THE IMAGE, THE ROTATION CAN ALSO BE CPU HEAVY
       // BECAUSE IT NEEDS TO REDRAW THE IMAGE
-      
-      setTimeout( function() { // SET A TIMEOUT SO THAT THE LOADING POPUP CAN BE SHOWN
 
-		  var image = $scope.imageSRC ;
+      setTimeout(function() { // SET A TIMEOUT SO THAT THE LOADING POPUP CAN BE SHOWN
 
-		  image.onload = null ; // remove the onload handler
-	 
-		  var canvas =  document.getElementById('myCanvas');
+        var image = $scope.imageSRC;
 
-		  // swap the width and height for 90 degree rotation
-		  canvas.width = image.height;
-		  canvas.height = image.width;
+        image.onload = null; // remove the onload handler
 
-		  var ctx = canvas.getContext("2d");
+        var canvas = document.getElementById('myCanvas');
 
-		  // translate context to center of canvas
-		  ctx.translate(image.height / 2, image.width / 2);
-		  ctx.rotate((Math.PI/180) * degree); // rotate image
+        // swap the width and height for 90 degree rotation
+        canvas.width = image.height;
+        canvas.height = image.width;
 
-		  // draw the new rotated image
-		  ctx.drawImage(image, - image.width / 2, - image.height / 2, image.width, image.height);
+        var ctx = canvas.getContext("2d");
 
-		  $scope.imageSRC.src = canvas.toDataURL(); // save the new original image
+        // translate context to center of canvas
+        ctx.translate(image.height / 2, image.width / 2);
+        ctx.rotate((Math.PI / 180) * degree); // rotate image
+
+        // draw the new rotated image
+        ctx.drawImage(image, -image.width / 2, -image.height / 2, image.width, image.height);
+
+        $scope.imageSRC.src = canvas.toDataURL(); // save the new original image
 
       }, 100);
 
-      setTimeout( function() {$ionicLoading.hide();},100); // HIDE THE POPUP AFTER IT'S DONE
-  }
-
-  // SHARE OR SAVE PHOTO FUNCTION
-  $scope.sharePhoto = function(){
-   
-  	if ( ionic.Platform.isAndroid() ) { // SAVE FOR ANDROID
-  	   window.canvas2ImagePlugin.saveImageDataToLibrary(
-                        function(msg){
-                            alert("Photo Saved!");
-                        }, 
-                        function(err){
-                            alert(err);
-                        }, 
-                        'myCanvas'
-                    );
-	}
-	else{ // SHARE SHEET WORKS FOR IOS ONLY
-
-  	    var canvas =  document.getElementById('myCanvas');
-	  	var dataURL = canvas.toDataURL();
-
-		$cordovaSocialSharing
-			.share("title", "message", dataURL, "link") // Share via native share sheet
-			.then(function(result) {
-				// Success!
-			}, function(err) {
-			  // An error occured. Show a message to the user
-		  	});
-  		}
-	}	
-    // end camera logic
-
-        $scope.upload = function() {
-        var options = {
-            quality : 75,
-            destinationType : Camera.DestinationType.DATA_URL,
-            sourceType : Camera.PictureSourceType.CAMERA,
-            allowEdit : true,
-            encodingType: Camera.EncodingType.JPEG,
-            popoverOptions: CameraPopoverOptions,
-            targetWidth: 500,
-            targetHeight: 500,
-            saveToPhotoAlbum: false
-        };
-        $cordovaCamera.getPicture(options).then(function(imageData) {
-            syncArray.$add({image: imageData}).then(function() {
-                alert("Image has been uploaded");
-            });
-        }, function(error) {
-            console.error(error);
-        });
+      setTimeout(function() {
+        $ionicLoading.hide();
+      }, 100); // HIDE THE POPUP AFTER IT'S DONE
     }
 
+    // SHARE OR SAVE PHOTO FUNCTION
+    $scope.sharePhoto = function() {
+
+        if (ionic.Platform.isAndroid()) { // SAVE FOR ANDROID
+          window.canvas2ImagePlugin.saveImageDataToLibrary(
+            function(msg) {
+              alert("Photo Saved!");
+            },
+            function(err) {
+              alert(err);
+            },
+            'myCanvas'
+          );
+        } else { // SHARE SHEET WORKS FOR IOS ONLY
+
+          var canvas = document.getElementById('myCanvas');
+          var dataURL = canvas.toDataURL();
+
+          $cordovaSocialSharing
+            .share("title", "message", dataURL, "link") // Share via native share sheet
+            .then(function(result) {
+              // Success!
+            }, function(err) {
+              // An error occured. Show a message to the user
+            });
+        }
+      }
+      // end camera logic
 
   })
