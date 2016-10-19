@@ -14,6 +14,10 @@ angular.module('proto.loginController', [])
     $scope.users = Users.all();
     console.log("in login controller")
 
+    $scope.skip = function() {
+      $state.go('tab.home')
+    }
+    
     $scope.toggleMenu = function() {
       $ionicSideMenuDelegate.toggleRight();
     };

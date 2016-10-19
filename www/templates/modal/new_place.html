@@ -19,14 +19,23 @@
         </div>
       </div>
     </div>
+
+      <!-- ZOOM 0.1 IS USED HERE TO DISPLAY THE ENTIRE CAMERA IMAGE WITHOUT RESCALING THE ORIGINAL IMG -->
+  <!-- IF YOU WANT TO RUN ANY FILTERS WITH JAVASCRIPT YOU WILL HAVE TO CROP THE IMAGE TO SOMETHING
+  SMALLER BECAUSE PERFORMANCE ISSUES WITH LARGE IMAGE FILES WHEN USING JAVASCRIPT -->
+    <div id="canvasContainer" class="centerDiv containerDiv">
+        <canvas id="myCanvas" style="zoom: 0.1;"></canvas>
+    </div>
+    
+
+    
   </ion-content>
   <ion-footer-bar class="bar-stable">
     <div class="row row-nopadding">
       <div class="col-67">
-        <button class="button button-icon ion-earth"></button>
-        <button class="button button-icon ion-link"></button>
         <button class="button button-icon ion-camera" ng-click="takePhoto('Camera')"></button>
         <button class="button button-icon ion-image" ng-click="takePhoto('Library')"></button>
+        <button class="button button-icon ion-earth"></button>
       </div>
       <div class="col-33 text-right">
         <button class="button button-outline button-calm">Share Place</button>

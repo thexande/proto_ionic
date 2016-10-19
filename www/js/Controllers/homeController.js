@@ -9,6 +9,20 @@ angular.module('proto.homeController', ['ngCordova'])
     $cordovaFile, 
     $cordovaSocialSharing,
     $ionicHistory) {
+
+// Get a reference to the storage service, which is used to create references in your storage bucket
+var storage = firebase.storage();
+    
+
+
+// Create a storage reference from our storage service
+var storageRef = storage.ref();
+// Create a child reference
+var imagesRef = storageRef.child('images');
+
+
+
+
     $scope.users = Users.all();
 
     $scope.toggleMenu = function() {
@@ -110,12 +124,28 @@ angular.module('proto.homeController', ['ngCordova'])
 			type = navigator.camera.PictureSourceType.CAMERA ;
 		else type = navigator.camera.PictureSourceType.PHOTOLIBRARY ;
 	
+
+
 		navigator.camera.getPicture(function(imageURI) {
-	
 			 image.onload = function() {
-				
 				 $scope.imageSRC = image ;
-		
+ 
+ window.resolveLocalFileSystemURL(imageURI, function (fileEntry) {
+             fileEntry.file(function (file) {
+                 var reader = new FileReader();
+                 reader.onloadend = function () {
+                          // This blob object can be saved to firebase
+                          var blob = new Blob([new Uint8Array(this.result)], { type: "image/jpeg" });                  
+                          console.log("blob here!" , blob);
+                 };
+                 reader.readAsArrayBuffer(file);
+              });
+            }, function (error) {
+              errorCallback(error);
+          });
+
+
+         console.log("image here ", image)
 				  var canvas =  document.getElementById('myCanvas');
 				  canvas.width = image.width;
 				  canvas.height = image.height;
@@ -226,4 +256,27 @@ angular.module('proto.homeController', ['ngCordova'])
   		}
 	}	
     // end camera logic
+
+        $scope.upload = function() {
+        var options = {
+            quality : 75,
+            destinationType : Camera.DestinationType.DATA_URL,
+            sourceType : Camera.PictureSourceType.CAMERA,
+            allowEdit : true,
+            encodingType: Camera.EncodingType.JPEG,
+            popoverOptions: CameraPopoverOptions,
+            targetWidth: 500,
+            targetHeight: 500,
+            saveToPhotoAlbum: false
+        };
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            syncArray.$add({image: imageData}).then(function() {
+                alert("Image has been uploaded");
+            });
+        }, function(error) {
+            console.error(error);
+        });
+    }
+
+
   })
